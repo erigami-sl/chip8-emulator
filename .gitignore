@@ -1,0 +1,6 @@
+# Build output
+chip8
+inspector
+
+# ROM files
+roms/IBM_Logo.ch8
