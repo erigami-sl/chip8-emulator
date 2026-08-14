@@ -3,20 +3,22 @@
 
 #include <stdint.h>
 
+#define RAM_SIZE 4096
+#define KEY_SIZE 16
+#define REG_SIZE 16
 //CHIP8 yapısının tanımı
 
-typedef struct {
-	uint8_t ram[4096];
-	uint8_t V[16];
-	uint16_t I;
-	uint8_t DT;
-	uint8_t ST;
-	uint16_t PC;
-	uint8_t SP;
-	uint16_t stack[16];
-	uint16_t keyboard;
-	uint8_t display[32][64]; //emin değilim!!!
-} chip8;
+
+uint8_t ram[RAM_SIZE];
+uint8_t V[REG_SIZE];
+uint16_t I;
+uint8_t DT;
+uint8_t ST;
+uint16_t PC;
+uint8_t SP;
+uint16_t stack[16];
+uint8_t key[KEY_SIZE];
+uint8_t display[32][64]; //emin değilim!!!
 
 //Sistemi çalışır kılmak için gereken fonksiyonların deklarasyonu
 
