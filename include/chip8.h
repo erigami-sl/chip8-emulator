@@ -15,7 +15,7 @@ typedef struct {
 	uint8_t SP;
 	uint16_t stack[16];
 	uint16_t keyboard;
-	uint64_t display[32]; //emin değilim!!!
+	uint8_t display[32][64]; //emin değilim!!!
 } chip8;
 
 //Sistemi çalışır kılmak için gereken fonksiyonların deklarasyonu
@@ -24,5 +24,7 @@ int init(chip8*);
 int load_rom(chip8*, char*);
 void dump(chip8*);
 int cycle(chip8*);
+
+
 
 #endif
