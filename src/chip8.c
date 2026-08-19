@@ -303,14 +303,17 @@ int cycle(void){
 
 				case 0x15: //Fx15 - LD DT, Vx: Set delay timer = Vx.
 					DT = V[X];
+					PC += 2;
 					break;
 
 				case 0x18: //Fx18 - LD ST, Vx: Set sound timer = Vx.
 					ST=V[X];
+					PC += 2;
 					break;
 
 				case 0x1E: //Fx1E - ADD I, Vx: Set I = I + Vx.
 					I = I + V[X];
+					PC += 2;
 					break;
 
 				case 0x29: //Fx29 - LD F, Vx: Set I = location of sprite for digit Vx.
@@ -320,11 +323,29 @@ int cycle(void){
 					break;
 
 				case 0x33: //Fx33 - LD B, Vx: Store BCD representation of Vx in memory locations I, I+1, and I+2.
-
+					uint8_t bcd = V[X];
+					ram[I] = bcd / 100;
+					ram[I+1] = (bcd % 10) / 10;
+					ram[I+2] = (bcd % 100);
+					PC += 2;
 					break;
-	            case 0x55: sprintf(op, "LD [I], V%X", X); break;
-	            case 0x65: sprintf(op, "LD V%X, [I]", X); break;
-	            default:   sprintf(op, "???"); break;
+
+				case 0x55: //Fx55 - LD [I], Vx: Store registers V0 through Vx in memory starting at location I.
+					for (int i=0, i < X, i++){
+						ram[I+i] = V[X + i];
+					}
+					PC += 2;
+					break;
+
+	            case 0x65:
+					for (int i=0, i < X, i++){
+						V[X+i] = ram[I + i];
+					}
+					PC += 2;
+					break;
+
+	            default:
+					break;
 	        }
 	        break;
 
