@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 
+#define FONT_START 0x50
 #define RAM_SIZE 4096
 #define KEY_SIZE 16
 #define REG_SIZE 16

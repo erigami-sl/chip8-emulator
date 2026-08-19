@@ -249,14 +249,23 @@ int cycle(void){
 			}
 			else{
 				chip -> V[0xF]=0;
-				for (int i=0; i<N; i++){
-					//---------------------------------
-					//BURAYI DA DAHA YAPMADIM SONRA YAP
-					//---------------------------------
-					uint8_t sprite = ram[I+i];
-					for (int j=0; j<8; j++){
-						if (display[V[X]+j][V[Y]+i] == 1 && sprite>>(7-j)==1){V[0xF] = 1;}
-						display[V[X]+j][V[Y]+i]=(sprite >> j)^display[V[X]+j][V[Y]+i];
+				for (int row=0; row<N; row++){
+
+					uint8_t sprite = ram[I+row];
+
+					for (int col=0; col<8; col++){
+						int px = (V[X] + vol) % 64;
+						int py = (V[Y] + row) % 32;
+
+						if (sprite & (0x80 >> col)){
+							if display[px][py] {
+								V[0xF] = 1;
+							}
+							display[px][py] ^= 1;
+						}
+						else {
+							display[px][py] ^= 0;
+						}
 					}
 				}
 			}
@@ -317,9 +326,8 @@ int cycle(void){
 					break;
 
 				case 0x29: //Fx29 - LD F, Vx: Set I = location of sprite for digit Vx.
-					//---------------------------------
-					//BURAYI DA DAHA YAPMADIM SONRA YAP
-					//---------------------------------
+					I = FONT_START + 5*V[X];
+					PC += 2;
 					break;
 
 				case 0x33: //Fx33 - LD B, Vx: Store BCD representation of Vx in memory locations I, I+1, and I+2.
@@ -349,7 +357,8 @@ int cycle(void){
 	        }
 	        break;
 
-	    default: sprintf(op, "???"); break;
+	    default:
+			break;
 	}
 
 }
