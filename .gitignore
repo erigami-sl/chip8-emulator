@@ -3,4 +3,5 @@ chip8
 inspector
 
 # ROM files
-roms/IBM_Logo.ch8
+roms/*
+Cowgod's Chip-8 Technical Reference.html
